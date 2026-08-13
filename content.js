@@ -158,7 +158,7 @@ function syncRoom() {
     currentTeam = null;
     soloNoticeShown = false;
     chatDisabled = false;
-    logEl.innerHTML = "";
+    while (logEl.firstChild) logEl.removeChild(logEl.firstChild);
   }
 
   if (!username) {
@@ -202,32 +202,45 @@ setInterval(() => {
 
 // ---- overlay UI -------------------------------------------------------------
 
-const root = document.createElement("div");
-root.id = "oftc-root";
-root.innerHTML = `
-  <div id="oftc-panel" class="oftc-collapsed">
-    <div id="oftc-header">
-      <span id="oftc-title">Chat</span>
-      <span id="oftc-status" title="connection status">idle</span>
-      <button id="oftc-reconnect" type="button" aria-label="reconnect" title="reconnect">↻</button>
-      <button id="oftc-toggle" type="button" aria-label="toggle">▾</button>
-    </div>
-    <div id="oftc-log" role="log" aria-live="polite"></div>
-    <form id="oftc-form">
-      <input id="oftc-input" type="text" maxlength="2000"
-             placeholder="Enter to send    (message shortcut: V)" autocomplete="off" />
-    </form>
-  </div>
-`;
-document.documentElement.appendChild(root);
+// Build the overlay DOM programmatically (no innerHTML) so Firefox lint is
+// happy and there is zero risk of injecting untrusted markup.
+function el(tag, opts = {}, ...children) {
+  const n = document.createElement(tag);
+  if (opts.id) n.id = opts.id;
+  if (opts.className) n.className = opts.className;
+  if (opts.type) n.type = opts.type;
+  if (opts.role) n.setAttribute("role", opts.role);
+  if (opts.title) n.title = opts.title;
+  if (opts.ariaLabel) n.setAttribute("aria-label", opts.ariaLabel);
+  if (opts.ariaLive) n.setAttribute("aria-live", opts.ariaLive);
+  if (opts.autocomplete) n.autocomplete = opts.autocomplete;
+  if (opts.maxLength) n.maxLength = opts.maxLength;
+  if (opts.placeholder) n.placeholder = opts.placeholder;
+  if (opts.text !== undefined) n.textContent = opts.text;
+  for (const c of children) if (c) n.appendChild(c);
+  return n;
+}
 
-const panel = root.querySelector("#oftc-panel");
-const logEl = root.querySelector("#oftc-log");
-const statusEl = root.querySelector("#oftc-status");
-const titleEl = root.querySelector("#oftc-title");
-const toggleBtn = root.querySelector("#oftc-toggle");
-const form = root.querySelector("#oftc-form");
-const input = root.querySelector("#oftc-input");
+const root = el("div", { id: "oftc-root" });
+const panel = el("div", { id: "oftc-panel", className: "oftc-collapsed" });
+const header = el("div", { id: "oftc-header" });
+const titleEl = el("span", { id: "oftc-title", text: "Chat" });
+const statusEl = el("span", { id: "oftc-status", title: "connection status", text: "idle" });
+const reconnectBtn = el("button", { id: "oftc-reconnect", type: "button", ariaLabel: "reconnect", title: "reconnect", text: "↻" });
+const toggleBtn = el("button", { id: "oftc-toggle", type: "button", ariaLabel: "toggle", text: "▾" });
+header.append(titleEl, statusEl, reconnectBtn, toggleBtn);
+
+const logEl = el("div", { id: "oftc-log", role: "log", ariaLive: "polite" });
+const form = el("form", { id: "oftc-form" });
+const input = el("input", {
+  id: "oftc-input", type: "text", maxLength: 2000,
+  placeholder: "Enter to send    (message shortcut: V)", autocomplete: "off",
+});
+form.appendChild(input);
+
+panel.append(header, logEl, form);
+root.appendChild(panel);
+document.documentElement.appendChild(root);
 
 function setStatus(text) { statusEl.textContent = text; }
 function setTitle(text) { titleEl.textContent = text; }
@@ -250,7 +263,7 @@ panel.addEventListener("click", (e) => {
   input.focus();
 });
 
-root.querySelector("#oftc-reconnect").addEventListener("click", () => {
+reconnectBtn.addEventListener("click", () => {
   console.log("[oftc cs] manual reconnect");
   appendMessage({ system: true, text: `reconnecting…` });
   currentRoom = null;
@@ -261,17 +274,15 @@ root.querySelector("#oftc-reconnect").addEventListener("click", () => {
 });
 
 function appendMessage({ nickname, text, self, system, ts }) {
-  const row = document.createElement("div");
-  row.className = "oftc-row" + (self ? " oftc-self" : "") + (system ? " oftc-system" : "");
   const time = new Date(ts || Date.now()).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   const who = system ? "•" : (nickname || "anon");
-  row.innerHTML = `
-    <span class="oftc-time">${time}</span>
-    <span class="oftc-who"></span>
-    <span class="oftc-text"></span>
-  `;
-  row.querySelector(".oftc-who").textContent = who;
-  row.querySelector(".oftc-text").textContent = text;
+  const row = el("div", {
+    className: "oftc-row" + (self ? " oftc-self" : "") + (system ? " oftc-system" : ""),
+  },
+    el("span", { className: "oftc-time", text: time }),
+    el("span", { className: "oftc-who", text: who }),
+    el("span", { className: "oftc-text", text: text }),
+  );
   logEl.appendChild(row);
   logEl.scrollTop = logEl.scrollHeight;
   while (logEl.children.length > 50) logEl.removeChild(logEl.firstChild);

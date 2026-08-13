@@ -5,41 +5,34 @@
 #   ./scripts/build-store.sh chrome       # just chrome
 #   ./scripts/build-store.sh firefox      # just firefox
 #
-# Output: dist/openfront-team-chat-<target>-<version>.zip
+# Allowlist approach: assemble a clean staging tree with exactly the files
+# the extension needs, then zip that. Anything not explicitly listed will
+# NEVER end up in a shipped bundle — including .env, .git, screenshots, etc.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
 DIST="dist"
+STAGE_ROOT="$DIST/stage"
 mkdir -p "$DIST"
 
-TARGETS=("${@:-chrome firefox}")
 if [ "$#" -eq 0 ]; then TARGETS=(chrome firefox); else TARGETS=("$@"); fi
 
 VERSION=$(python3 -c "import json;print(json.load(open('manifest.chrome.json'))['version'])")
 
-# Files that never ship.
-EXCLUDE=(
-  "manifest.chrome.json"
-  "manifest.firefox.json"
-  "manifest.dev-chrome.json"
-  "manifest.dev-firefox.json"
-  "manifest.json"
-  "config.prod.js"
-  "config.dev.js"
-  "use.sh"
-  "*.md"
-  "scripts/*"
-  "deploy/*"
-  "relay-example/*"
-  "icons/source.svg"
-  "dist/*"
-  ".git/*"
-  ".DS_Store"
-  "*/.DS_Store"
+# The complete file set for a shipped bundle.
+FILES=(
+  manifest.json
+  background.js
+  content.js
+  content.css
+  config.js
+  popup.html
+  popup.js
+  icons/16.png
+  icons/32.png
+  icons/48.png
+  icons/128.png
 )
-
-zip_excludes=()
-for pat in "${EXCLUDE[@]}"; do zip_excludes+=("-x" "$pat"); done
 
 for target in "${TARGETS[@]}"; do
   case "$target" in
@@ -48,15 +41,37 @@ for target in "${TARGETS[@]}"; do
   esac
 
   echo "==> building $target"
-  ./use.sh "$target" >/dev/null   # set manifest.json + config.js to prod
+  # Render the prod config from .env and set the active manifest.json.
+  ./use.sh "$target" >/dev/null
+
+  # Verify each required file exists.
+  for f in "${FILES[@]}"; do
+    if [ ! -f "$f" ]; then echo "missing required file: $f" >&2; exit 1; fi
+  done
+
+  # Fresh staging dir.
+  stage="$STAGE_ROOT/$target"
+  rm -rf "$stage"
+  mkdir -p "$stage"
+  for f in "${FILES[@]}"; do
+    mkdir -p "$stage/$(dirname "$f")"
+    cp "$f" "$stage/$f"
+  done
+
+  # Sanity check: no secrets slipped in.
+  if grep -RIn "SHARED_SECRET" "$stage" 2>/dev/null | grep -v "config.js" >/dev/null; then
+    echo "aborting: SHARED_SECRET referenced outside config.js in staged bundle" >&2; exit 1
+  fi
+
   out="$DIST/openfront-team-chat-$target-$VERSION.zip"
   rm -f "$out"
-  # Zip everything from the repo root except the exclusions.
-  # NOTE: this bundles the active manifest.json (which use.sh just wrote) and
-  # config.js. That's what the store expects.
-  zip -qr "$out" . "${zip_excludes[@]}"
+  out_abs="$PWD/$out"
+  ( cd "$stage" && zip -qr "$out_abs" . )
   echo "    wrote $out ($(du -h "$out" | cut -f1))"
+  echo "    contents:"
+  unzip -Z1 "$out" | sort | awk '{ printf "      %s\n", $0 }'
 done
 
+rm -rf "$STAGE_ROOT"
 echo
 echo "done — zips are in $DIST/"

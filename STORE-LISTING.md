@@ -6,7 +6,7 @@ Reference text for Chrome Web Store and Firefox Add-ons submissions.
 `OpenFront Chat (Community)`
 
 ## Short summary (≤ 132 chars — Chrome uses ≤ 132; Firefox ≤ 250)
-`Free-text team chat overlay for OpenFront.io — coordinate with your teammates without leaving the browser.`
+`Community chat for OpenFront.io players — chat in the lobby, in FFA matches, or with teammates in team games.`
 
 ## Category
 Chrome Web Store: **Communication**
@@ -15,10 +15,10 @@ Firefox Add-ons: **Other**
 ## Detailed description (~500–1000 chars)
 
 ```
-OpenFront Chat (Community) adds a free-text chat window to matches on openfront.io. The
-built-in emoji and quick-chat are limited; this extension lets teammates type
-proper sentences to coordinate strategy — the equivalent of team voice chat, but
-without needing Discord or a mic.
+OpenFront Chat (Community) is a small chat window for OpenFront.io players.
+The game's built-in emoji and quick-chat are limited; this extension adds a
+proper text chat so you can plan strategy in real sentences, without needing
+Discord or a voice call.
 
 How it works
 - On the main page, you land in Global Chat where anyone with the extension can

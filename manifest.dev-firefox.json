@@ -1,10 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "OpenFront Chat (Community) — dev",
-  "version": "0.2.0",
-  "description": "DEV build — points at a local relay. Not for distribution.",
-
-  "permissions": ["storage", "activeTab", "scripting"],
+  "name": "OpenFront Chat (Community) \u2014 dev",
+  "version": "0.2.1",
+  "description": "DEV build \u2014 points at a local relay. Not for distribution.",
+  "permissions": [
+    "scripting"
+  ],
   "host_permissions": [
     "*://openfront.io/*",
     "*://*.openfront.io/*",
@@ -13,34 +14,39 @@
     "ws://127.0.0.1/*",
     "ws://[::1]/*"
   ],
-
   "background": {
-    "scripts": ["config.js", "background.js"]
+    "scripts": [
+      "config.js",
+      "background.js"
+    ]
   },
-
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; connect-src ws: wss: http: https:;"
   },
-
   "content_scripts": [
     {
-      "matches": ["*://openfront.io/*", "*://*.openfront.io/*"],
-      "js": ["content.js"],
-      "css": ["content.css"],
+      "matches": [
+        "*://openfront.io/*",
+        "*://*.openfront.io/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
       "run_at": "document_idle",
       "all_frames": false
     }
   ],
-
   "icons": {
-    "16":  "icons/16.png",
-    "32":  "icons/32.png",
-    "48":  "icons/48.png",
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
     "128": "icons/128.png"
   },
-
   "action": {
-    "default_title": "OpenFront Chat (Community) — dev",
+    "default_title": "OpenFront Chat (Community) \u2014 dev",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/16.png",
@@ -48,11 +54,17 @@
       "48": "icons/48.png"
     }
   },
-
   "browser_specific_settings": {
     "gecko": {
       "id": "openfront-team-chat-dev@asp.now",
-      "strict_min_version": "115.0"
+      "strict_min_version": "115.0",
+      "data_collection_permissions": {
+        "required": [
+          "personallyIdentifyingInfo",
+          "personalCommunications"
+        ],
+        "optional": []
+      }
     }
   }
 }

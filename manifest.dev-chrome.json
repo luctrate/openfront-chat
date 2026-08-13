@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
   "name": "OpenFront Chat (Community) — dev",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "DEV build — points at a local relay. Not for distribution.",
 
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": ["scripting"],
   "host_permissions": [
     "*://openfront.io/*",
     "*://*.openfront.io/*",

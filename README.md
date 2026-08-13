@@ -1,6 +1,6 @@
 # OpenFront Chat (Community)
 
-Free-text chat overlay for [openfront.io](https://openfront.io). Adds a small chat panel that appears on the site — Global Chat on the main page, Team Chat in team matches, Game Chat in FFA. Solo games are detected and chat stays off.
+Community chat for [openfront.io](https://openfront.io) players. Adds a small chat panel that appears on the site — Global Chat in the lobby / on the main page, Team Chat in team matches, Game Chat in FFA. Solo games are detected and chat stays off.
 
 Works in Chrome (MV3 service worker) and Firefox (MV3 event page). Talks to a small Node/WebSocket relay you run yourself.
 

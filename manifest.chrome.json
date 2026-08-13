@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
   "name": "OpenFront Chat (Community)",
-  "version": "0.2.0",
-  "description": "Free-text team chat overlay for OpenFront.io games. Uses an out-of-band relay so teammates can coordinate without voice.",
+  "version": "0.2.1",
+  "description": "Community chat for OpenFront.io players — chat in the lobby, in FFA matches, or with teammates in team games.",
 
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": ["scripting"],
   "host_permissions": [
     "*://openfront.io/*",
     "*://*.openfront.io/*",
