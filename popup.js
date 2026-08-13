@@ -1,4 +1,2 @@
-document.getElementById("wsUrl").textContent = OFTC_CONFIG.wsUrl || "(unset)";
-const s = OFTC_CONFIG.secret || "";
-document.getElementById("secretMask").textContent =
-  s ? `${s.slice(0, 4)}…${s.slice(-4)} (${s.length} chars)` : "(none)";
+const api = typeof browser !== "undefined" ? browser : chrome;
+document.getElementById("ver").textContent = api.runtime.getManifest().version;

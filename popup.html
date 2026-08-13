@@ -4,22 +4,75 @@
   <meta charset="utf-8" />
   <title>OpenFront Chat (Community)</title>
   <style>
-    body { font: 13px/1.4 system-ui, -apple-system, sans-serif; width: 280px; padding: 12px; margin: 0; color: #222; }
-    h1 { font-size: 14px; margin: 0 0 8px; }
-    .row { margin-top: 8px; }
-    .k { font-weight: 600; font-size: 12px; color: #444; }
-    .v { font-family: ui-monospace, Menlo, monospace; font-size: 12px; word-break: break-all; }
-    .note { background: #f6f6f6; border-left: 3px solid #4a90e2; padding: 6px 8px; font-size: 11px; margin-top: 10px; color: #444; }
+    :root { color-scheme: light dark; }
+    body {
+      font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+      width: 280px;
+      padding: 14px;
+      margin: 0;
+      color: #222;
+      background: #fff;
+    }
+    h1 { font-size: 14px; margin: 0 0 2px; }
+    .subtitle { color: #666; font-size: 11px; margin-bottom: 10px; }
+    .beta {
+      display: inline-block;
+      background: #ffe680;
+      color: #6b4b00;
+      font-weight: 600;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      vertical-align: 1px;
+      margin-left: 4px;
+    }
+    p { margin: 8px 0; }
+    ul { margin: 6px 0 10px 18px; padding: 0; }
+    li { margin: 2px 0; color: #444; }
+    .cta {
+      display: block;
+      margin-top: 12px;
+      padding: 8px 10px;
+      background: #4a90e2;
+      color: #fff !important;
+      text-decoration: none;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .cta:hover { background: #3577c6; }
+    .footer {
+      margin-top: 10px;
+      font-size: 10px;
+      color: #999;
+      text-align: center;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #1c1e22; color: #ddd; }
+      .subtitle, li { color: #aaa; }
+      .footer { color: #666; }
+      .beta { background: #4a3a10; color: #ffd980; }
+    }
   </style>
 </head>
 <body>
-  <h1>OpenFront Chat (Community)</h1>
-  <div class="row"><span class="k">Relay:</span> <span class="v" id="wsUrl">—</span></div>
-  <div class="row"><span class="k">Secret:</span> <span class="v" id="secretMask">—</span></div>
-  <div class="note">
-    Nickname and team are auto-detected from OpenFront. Global Chat is available on the main page; Team Chat in team games; Game Chat in FFA/multiplayer. Disabled in single-player.
-  </div>
-  <script src="config.js"></script>
+  <h1>OpenFront Chat<span class="beta">BETA</span></h1>
+  <div class="subtitle">Community project — not affiliated with OpenFront.io</div>
+
+  <p>Chat appears automatically:</p>
+  <ul>
+    <li><b>Global Chat</b> on the main page</li>
+    <li><b>Team Chat</b> in team matches</li>
+    <li><b>Game Chat</b> in FFA / multiplayer</li>
+  </ul>
+  <p>Nothing to configure — nickname and team are read from your OpenFront settings.</p>
+
+  <a class="cta" href="https://github.com/luctrate/openfront-chat/issues" target="_blank" rel="noopener">
+    Report a bug or suggest a feature
+  </a>
+
+  <div class="footer">v<span id="ver">?</span></div>
+
   <script src="popup.js"></script>
 </body>
 </html>
