@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: relay
+  namespace: openfront-team-chat
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`relay.asp.now`)
+      services:
+        - name: relay
+          port: 8080
+  tls:
+    certResolver: default

@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "OpenFront Chat (Community)",
+  "version": "0.2.0",
+  "description": "Free-text team chat overlay for OpenFront.io games. Uses an out-of-band relay so teammates can coordinate without voice.",
+
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": [
+    "*://openfront.io/*",
+    "*://*.openfront.io/*",
+    "wss://relay.asp.now/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://openfront.io/*", "*://*.openfront.io/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+
+  "icons": {
+    "16":  "icons/16.png",
+    "32":  "icons/32.png",
+    "48":  "icons/48.png",
+    "128": "icons/128.png"
+  },
+
+  "action": {
+    "default_title": "OpenFront Chat (Community)",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png"
+    }
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "openfront-team-chat@asp.now",
+      "strict_min_version": "121.0"
+    }
+  }
+}

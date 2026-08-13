@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: relay
+  namespace: openfront-team-chat
+spec:
+  type: ClusterIP
+  selector: { app: relay }
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080

@@ -1,0 +1,35 @@
+# Active manifest + config are artifacts of use.sh — the source of truth
+# lives in manifest.{chrome,firefox,dev-chrome,dev-firefox}.json and either
+# config.dev.js (committed) or config.prod.js (generated from .env).
+manifest.json
+config.js
+config.prod.js
+
+# Secrets — never commit
+.env
+.env.local
+
+# Build outputs
+dist/
+*.zip
+*.xpi
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-*.log
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Env / secrets (nothing here should ever be committed).
+# .env.example IS committed (see negation below).
+.env
+.env.*
+!.env.example

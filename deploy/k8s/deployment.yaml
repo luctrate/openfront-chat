@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: relay
+  namespace: openfront-team-chat
+  labels: { app: relay }
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate  # single-instance; room state is in-memory
+  selector:
+    matchLabels: { app: relay }
+  template:
+    metadata:
+      labels: { app: relay }
+    spec:
+      containers:
+        - name: relay
+          image: openfront-relay:0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+            - name: ALLOWED_ORIGINS
+              value: ""              # populate once you have the Chrome extension ID
+            - name: MAX_ROOM_SIZE
+              value: "12"
+            - name: GLOBAL_MAX_ROOM_SIZE
+              value: "200"
+            - name: MSG_PER_SEC
+              value: "1"
+            - name: MSG_BURST
+              value: "3"
+            - name: MSG_PER_MIN
+              value: "10"
+            - name: CONN_PER_MIN_PER_IP
+              value: "20"
+            - name: FAIL_OPEN_ON_API_ERR
+              value: "0"
+            - name: SHARED_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: relay-secret
+                  key: shared_secret
+          resources:
+            requests: { cpu: "20m",  memory: "40Mi" }
+            limits:   { cpu: "500m", memory: "128Mi" }
+          readinessProbe:
+            tcpSocket: { port: 8080 }
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket: { port: 8080 }
+            initialDelaySeconds: 10
+            periodSeconds: 30

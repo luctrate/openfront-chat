@@ -1,0 +1,13 @@
+// GENERATED at build time from config.prod.js.template + .env.
+// Do NOT edit config.prod.js by hand — edit .env and rerun use.sh.
+//
+// This file is imported by background.js via importScripts (Chrome MV3
+// service worker) and by popup.js via a <script> tag.
+
+const OFTC_CONFIG = {
+  wsUrl: "__WS_URL__",
+  secret: "__SHARED_SECRET__",
+};
+
+// Expose for both service-worker and popup contexts.
+if (typeof self !== "undefined") self.OFTC_CONFIG = OFTC_CONFIG;
