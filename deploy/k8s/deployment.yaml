@@ -39,6 +39,14 @@ spec:
               value: "20"
             - name: FAIL_OPEN_ON_API_ERR
               value: "0"
+            - name: MSG_MAX_LEN
+              value: "300"
+            - name: MSG_MIN_MEANINGFUL
+              value: "2"
+            - name: MSG_DEDUP_WINDOW_MS
+              value: "30000"
+            - name: URL_ALLOW_HOSTS
+              value: "openfront.io"
             - name: SHARED_SECRET
               valueFrom:
                 secretKeyRef:
