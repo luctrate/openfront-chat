@@ -17,7 +17,8 @@ RELAY_DIR="$REPO/relay-example"
 RELAY_SRC="$RELAY_DIR/server.js"
 METRICS_SRC="$RELAY_DIR/metrics.js"
 PACKAGE_SRC="$RELAY_DIR/package.json"
-IMAGE_TAG="openfront-relay:0.1.0"
+IMAGE_VERSION=$(python3 -c "import json,sys;print(json.load(open(sys.argv[1]))['version'])" "$RELAY_DIR/package.json")
+IMAGE_TAG="openfront-relay:$IMAGE_VERSION"
 REMOTE_DIR="/tmp/oftc-relay-build"
 
 if [ ! -f "$REPO/.env" ]; then
