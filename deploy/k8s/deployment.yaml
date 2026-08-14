@@ -12,11 +12,11 @@ spec:
     matchLabels: { app: relay }
   template:
     metadata:
-      labels: { app: relay }
+      labels: { app: relay, stage: prod }
     spec:
       containers:
         - name: relay
-          image: openfront-relay:0.1.0
+          image: openfront-relay:0.3.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -47,14 +47,24 @@ spec:
               value: "30000"
             - name: URL_ALLOW_HOSTS
               value: "openfront.io"
+            - name: STAGE
+              value: "prod"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://otel-collector.otel.svc.cluster.local:4318"
+            - name: OTEL_SERVICE_NAME
+              value: "oftc-relay"
+            - name: OTEL_SERVICE_VERSION
+              value: "0.3.1"
+            - name: OTEL_METRICS_EXPORT_INTERVAL
+              value: "30000"
             - name: SHARED_SECRET
               valueFrom:
                 secretKeyRef:
                   name: relay-secret
                   key: shared_secret
           resources:
-            requests: { cpu: "20m",  memory: "40Mi" }
-            limits:   { cpu: "500m", memory: "128Mi" }
+            requests: { cpu: "20m",  memory: "60Mi" }
+            limits:   { cpu: "500m", memory: "192Mi" }
           readinessProbe:
             tcpSocket: { port: 8080 }
             initialDelaySeconds: 2

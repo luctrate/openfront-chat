@@ -36,7 +36,33 @@ The extension talks to:
 - **openfront.io** (the game host) — the page you are already on.
 - **openfront.io game-verification API** — the relay queries `openfront.io/wN/api/game/<id>/exists` to confirm a game ID is real before opening a room. No personal data is sent in this request beyond the game ID.
 
-No analytics, tracking pixels, or advertising SDKs are included.
+The extension itself contains no analytics, tracking pixels, or advertising SDKs.
+
+## Aggregate metrics on the relay
+
+The relay server records **aggregate operational metrics** in order to understand
+usage volume and diagnose failures. These metrics are counters and gauges only —
+no individual message contents, no raw IP addresses, and no raw nicknames are
+stored.
+
+What is recorded:
+
+- Total messages sent, grouped by chat mode (Global / Team / Game)
+- Number of content-filter drops, grouped by reason (too long, too short, URL,
+  duplicate, etc.)
+- WebSocket connection / disconnect counts, grouped by close code
+- Rate-limit and room-cap hits
+- OpenFront game-verification API call counts and latencies
+- Approximate count of unique users and unique IP addresses seen in a rolling
+  5-minute window. Uniqueness is computed from **salted SHA-256 hashes** that
+  are truncated and held only in the relay process memory; the raw values are
+  never stored or transmitted to the metrics backend. A fresh random salt is
+  generated on every relay restart, so no cross-restart correlation is
+  possible.
+
+Metrics are exported to a self-hosted OpenObserve instance operated by the same
+author, on the same infrastructure as the relay. No third-party analytics
+services (Google Analytics, Datadog, etc.) are used.
 
 ## Contact
 

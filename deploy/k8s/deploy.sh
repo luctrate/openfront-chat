@@ -13,7 +13,10 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
 REPO="$HERE/../.."
-RELAY_SRC="$REPO/relay-example/server.js"
+RELAY_DIR="$REPO/relay-example"
+RELAY_SRC="$RELAY_DIR/server.js"
+METRICS_SRC="$RELAY_DIR/metrics.js"
+PACKAGE_SRC="$RELAY_DIR/package.json"
 IMAGE_TAG="openfront-relay:0.1.0"
 REMOTE_DIR="/tmp/oftc-relay-build"
 
@@ -28,9 +31,9 @@ set -a; . "$REPO/.env"; set +a
 : "${GCP_INSTANCE:?GCP_INSTANCE not set in .env}"
 : "${GCP_ZONE:?GCP_ZONE not set in .env}"
 
-if [ ! -f "$RELAY_SRC" ]; then
-  echo "cannot find relay server source at $RELAY_SRC" >&2; exit 1
-fi
+for f in "$RELAY_SRC" "$METRICS_SRC" "$PACKAGE_SRC"; do
+  if [ ! -f "$f" ]; then echo "missing $f" >&2; exit 1; fi
+done
 
 SSH="gcloud compute ssh --tunnel-through-iap --project=$GCP_PROJECT --zone=$GCP_ZONE $GCP_INSTANCE"
 SCP="gcloud compute scp --tunnel-through-iap --project=$GCP_PROJECT --zone=$GCP_ZONE"
@@ -43,7 +46,7 @@ echo "==> copying build context to VM"
 $SSH --command="rm -rf $REMOTE_DIR && mkdir -p $REMOTE_DIR"
 
 $SCP --recurse "$HERE"/* "$GCP_INSTANCE:$REMOTE_DIR/"
-$SCP "$RELAY_SRC" "$GCP_INSTANCE:$REMOTE_DIR/server.js"
+$SCP "$RELAY_SRC" "$METRICS_SRC" "$PACKAGE_SRC" "$GCP_INSTANCE:$REMOTE_DIR/"
 
 echo "==> building image with nerdctl into k3s containerd namespace"
 $SSH --command="sudo nerdctl --address /run/k3s/containerd/containerd.sock -n k8s.io build -t $IMAGE_TAG $REMOTE_DIR"

@@ -1,0 +1,59 @@
+# Canary deployment used to validate a new relay image before promoting to
+# the live `relay` deployment. Same namespace, different name, different
+# OTEL_SERVICE_NAME so metrics are separable in the backend.
+#
+# No Service and no IngressRoute — reach it via `kubectl port-forward` or
+# an in-cluster exec pod. Traffic from real users continues to hit `relay`.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: relay-test
+  namespace: openfront-team-chat
+  labels: { app: relay-test, canary: "true" }
+spec:
+  replicas: 1
+  strategy: { type: Recreate }
+  selector:
+    matchLabels: { app: relay-test }
+  template:
+    metadata:
+      labels: { app: relay-test, canary: "true", stage: test }
+    spec:
+      containers:
+        - name: relay
+          image: openfront-relay:0.3.1
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8080 }]
+          env:
+            - { name: PORT,                 value: "8080" }
+            - { name: ALLOWED_ORIGINS,      value: "" }
+            - { name: MAX_ROOM_SIZE,        value: "12" }
+            - { name: GLOBAL_MAX_ROOM_SIZE, value: "200" }
+            - { name: MSG_PER_SEC,          value: "1" }
+            - { name: MSG_BURST,            value: "3" }
+            - { name: MSG_PER_MIN,          value: "10" }
+            - { name: CONN_PER_MIN_PER_IP,  value: "20" }
+            - { name: FAIL_OPEN_ON_API_ERR, value: "0" }
+            - { name: MSG_MAX_LEN,          value: "300" }
+            - { name: MSG_MIN_MEANINGFUL,   value: "2" }
+            - { name: MSG_DEDUP_WINDOW_MS,  value: "30000" }
+            - { name: URL_ALLOW_HOSTS,      value: "openfront.io" }
+            - { name: OTEL_EXPORTER_OTLP_ENDPOINT,  value: "http://otel-collector.otel.svc.cluster.local:4318" }
+            - { name: OTEL_SERVICE_NAME,            value: "oftc-relay-test" }
+            - { name: OTEL_SERVICE_VERSION,         value: "0.3.0" }
+            - { name: OTEL_METRICS_EXPORT_INTERVAL, value: "10000" }
+            - { name: STAGE,                        value: "test" }
+            - name: SHARED_SECRET
+              valueFrom:
+                secretKeyRef: { name: relay-secret, key: shared_secret }
+          resources:
+            requests: { cpu: "20m",  memory: "40Mi" }
+            limits:   { cpu: "500m", memory: "192Mi" }
+          readinessProbe:
+            tcpSocket: { port: 8080 }
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket: { port: 8080 }
+            initialDelaySeconds: 10
+            periodSeconds: 30

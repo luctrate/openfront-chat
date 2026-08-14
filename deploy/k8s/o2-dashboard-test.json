@@ -1,0 +1,1425 @@
+{
+  "version": 5,
+  "dashboardId": "",
+  "title": "OpenFront Chat — Relay Metrics — TEST",
+  "description": "Live analytics for the openfront-chat relay (stage=test)",
+  "role": "",
+  "owner": "openfront-chat",
+  "created": "2026-08-14T08:00:00Z",
+  "tabs": [
+    {
+      "tabId": "default",
+      "name": "Overview",
+      "panels": [
+        {
+          "id": "p1",
+          "type": "metric",
+          "title": "Active connections",
+          "description": "Live WebSocket connections",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT last_value(value ORDER BY _timestamp) AS v FROM \"oftc_active_connections\" WHERE stage = 'test'",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_active_connections",
+                "stream_type": "metrics",
+                "x": [],
+                "y": [
+                  {
+                    "label": "v",
+                    "alias": "v",
+                    "column": "value",
+                    "color": null
+                  }
+                ],
+                "breakdown": [],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "w": 3,
+            "h": 3,
+            "i": 1
+          }
+        },
+        {
+          "id": "p2",
+          "type": "metric",
+          "title": "Active users (5 min)",
+          "description": "Distinct salted-hashed nicknames, rolling 5-min window",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT last_value(value ORDER BY _timestamp) AS v FROM \"oftc_active_users_5m\" WHERE stage = 'test'",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_active_users_5m",
+                "stream_type": "metrics",
+                "x": [],
+                "y": [
+                  {
+                    "label": "v",
+                    "alias": "v",
+                    "column": "value",
+                    "color": null
+                  }
+                ],
+                "breakdown": [],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 3,
+            "y": 0,
+            "w": 3,
+            "h": 3,
+            "i": 2
+          }
+        },
+        {
+          "id": "p3",
+          "type": "metric",
+          "title": "Active IPs (5 min)",
+          "description": "Distinct salted-hashed IPs, rolling 5-min window",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT last_value(value ORDER BY _timestamp) AS v FROM \"oftc_active_ips_5m\" WHERE stage = 'test'",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_active_ips_5m",
+                "stream_type": "metrics",
+                "x": [],
+                "y": [
+                  {
+                    "label": "v",
+                    "alias": "v",
+                    "column": "value",
+                    "color": null
+                  }
+                ],
+                "breakdown": [],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 3,
+            "i": 3
+          }
+        },
+        {
+          "id": "p4",
+          "type": "metric",
+          "title": "Active rooms",
+          "description": "Rooms with at least one connected socket",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT sum(v) AS total FROM (SELECT last_value(value ORDER BY _timestamp) AS v, room_type FROM \"oftc_active_rooms\" WHERE stage = 'test' GROUP BY room_type) AS t",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_active_rooms",
+                "stream_type": "metrics",
+                "x": [],
+                "y": [
+                  {
+                    "label": "total",
+                    "alias": "total",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "sum"
+                  }
+                ],
+                "breakdown": [],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 9,
+            "y": 0,
+            "w": 3,
+            "h": 3,
+            "i": 4
+          }
+        },
+        {
+          "id": "p5",
+          "type": "line",
+          "title": "Messages per interval, by mode",
+          "description": "Total chat messages broadcast, split by mode",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, sum(value) AS y_axis_1, mode AS breakdown_1 FROM \"oftc_messages_sent_total\" WHERE stage = 'test' GROUP BY x_axis_1, breakdown_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_messages_sent_total",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Messages",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "sum"
+                  }
+                ],
+                "breakdown": [
+                  {
+                    "label": "mode",
+                    "alias": "breakdown_1",
+                    "column": "mode",
+                    "color": null
+                  }
+                ],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 3,
+            "w": 6,
+            "h": 6,
+            "i": 5
+          }
+        },
+        {
+          "id": "p6",
+          "type": "bar",
+          "title": "Filter drops, by reason",
+          "description": "Messages the server dropped by content filter",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, sum(value) AS y_axis_1, reason AS breakdown_1 FROM \"oftc_filter_hits_total\" WHERE stage = 'test' GROUP BY x_axis_1, breakdown_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_filter_hits_total",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Drops",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "sum"
+                  }
+                ],
+                "breakdown": [
+                  {
+                    "label": "reason",
+                    "alias": "breakdown_1",
+                    "column": "reason",
+                    "color": null
+                  }
+                ],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 6,
+            "y": 3,
+            "w": 6,
+            "h": 6,
+            "i": 6
+          }
+        },
+        {
+          "id": "p7",
+          "type": "line",
+          "title": "WebSocket connects vs disconnects",
+          "description": "Socket lifecycle counters",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, sum(value) AS y_axis_1 FROM \"oftc_ws_connections_total\" WHERE stage = 'test' GROUP BY x_axis_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_ws_connections_total",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "connects",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "sum"
+                  }
+                ],
+                "breakdown": [],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "connects",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            },
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, sum(value) AS y_axis_1 FROM \"oftc_ws_disconnects_total\" WHERE stage = 'test' GROUP BY x_axis_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_ws_disconnects_total",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "disconnects",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "sum"
+                  }
+                ],
+                "breakdown": [],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "disconnects",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 9,
+            "w": 6,
+            "h": 6,
+            "i": 7
+          }
+        },
+        {
+          "id": "p8",
+          "type": "line",
+          "title": "Verify API latency (ms)",
+          "description": "OpenFront game-existence API latency",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "ms",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, approx_percentile_cont(value, 0.50) AS y_axis_1 FROM \"oftc_verify_duration_ms\" WHERE stage = 'test' GROUP BY x_axis_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_verify_duration_ms",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "p50",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "p50"
+                  }
+                ],
+                "breakdown": [],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "p50",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            },
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, approx_percentile_cont(value, 0.95) AS y_axis_1 FROM \"oftc_verify_duration_ms\" WHERE stage = 'test' GROUP BY x_axis_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_verify_duration_ms",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "p95",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "p95"
+                  }
+                ],
+                "breakdown": [],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "p95",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 6,
+            "y": 9,
+            "w": 6,
+            "h": 6,
+            "i": 8
+          }
+        },
+        {
+          "id": "p9",
+          "type": "bar",
+          "title": "Rate-limit hits",
+          "description": "Messages / connections rejected by rate limits, by kind",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, sum(value) AS y_axis_1, kind AS breakdown_1 FROM \"oftc_rate_limit_hits_total\" WHERE stage = 'test' GROUP BY x_axis_1, breakdown_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_rate_limit_hits_total",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "hits",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "sum"
+                  }
+                ],
+                "breakdown": [
+                  {
+                    "label": "kind",
+                    "alias": "breakdown_1",
+                    "column": "kind",
+                    "color": null
+                  }
+                ],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 15,
+            "w": 6,
+            "h": 5,
+            "i": 9
+          }
+        },
+        {
+          "id": "p10",
+          "type": "line",
+          "title": "Message length (chars)",
+          "description": "Distribution of broadcast message length",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "chars",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, approx_percentile_cont(value, 0.50) AS y_axis_1 FROM \"oftc_message_length_chars\" WHERE stage = 'test' GROUP BY x_axis_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_message_length_chars",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "p50",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "p50"
+                  }
+                ],
+                "breakdown": [],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "p50",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            },
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, approx_percentile_cont(value, 0.95) AS y_axis_1 FROM \"oftc_message_length_chars\" WHERE stage = 'test' GROUP BY x_axis_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_message_length_chars",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "p95",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "p95"
+                  }
+                ],
+                "breakdown": [],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "p95",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 6,
+            "y": 15,
+            "w": 6,
+            "h": 5,
+            "i": 10
+          }
+        },
+        {
+          "id": "p11",
+          "type": "bar",
+          "title": "Auth failures",
+          "description": "Handshake rejections at the relay, by reason",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, sum(value) AS y_axis_1, reason AS breakdown_1 FROM \"oftc_auth_failures_total\" WHERE stage = 'test' GROUP BY x_axis_1, breakdown_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_auth_failures_total",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "hits",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "sum"
+                  }
+                ],
+                "breakdown": [
+                  {
+                    "label": "reason",
+                    "alias": "breakdown_1",
+                    "column": "reason",
+                    "color": null
+                  }
+                ],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 20,
+            "w": 6,
+            "h": 5,
+            "i": 11
+          }
+        },
+        {
+          "id": "p12",
+          "type": "bar",
+          "title": "Room-full rejections",
+          "description": "Connections rejected because a room was at capacity",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, sum(value) AS y_axis_1, room_type AS breakdown_1 FROM \"oftc_room_full_total\" WHERE stage = 'test' GROUP BY x_axis_1, breakdown_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_room_full_total",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "hits",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "sum"
+                  }
+                ],
+                "breakdown": [
+                  {
+                    "label": "room_type",
+                    "alias": "breakdown_1",
+                    "column": "room_type",
+                    "color": null
+                  }
+                ],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 6,
+            "y": 20,
+            "w": 6,
+            "h": 5,
+            "i": 12
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "list": [],
+    "showDynamicFilters": false
+  },
+  "defaultDatetimeDuration": {
+    "type": "relative",
+    "relativeTimePeriod": "6h",
+    "startTime": null,
+    "endTime": null
+  }
+}
