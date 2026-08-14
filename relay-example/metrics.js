@@ -89,6 +89,7 @@ export const metrics = {
   roomFull:          meter.createCounter("oftc_room_full_total",       { description: "Room-cap rejections" }),
   authFailures:      meter.createCounter("oftc_auth_failures_total",   { description: "Handshake auth rejections" }),
   messageLength:     meter.createHistogram("oftc_message_length_chars",{ description: "Chat message length after filtering", unit: "1" }),
+  ageGateDecisions:  meter.createCounter("oftc_age_gate_decisions_total", { description: "Age-gate outcomes per (country, verdict). verdict = pass | reject | no_client_flag." }),
 };
 
 // ---- gauges (observed from live state) -------------------------------------

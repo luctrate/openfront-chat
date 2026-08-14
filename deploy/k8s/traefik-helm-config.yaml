@@ -1,0 +1,48 @@
+# k3s Traefik HelmChartConfig — production values.
+#
+# Changes from stock:
+#   * failurePolicy: abort — if a helm reconcile ever fails, the old release
+#     KEEPS RUNNING. (The default 'reinstall' uninstalls first, which can
+#     leave the cluster with no ingress if the reinstall then fails.)
+#   * service.externalTrafficPolicy: Local — so real client IPs make it
+#     through svclb-traefik instead of being MASQUERADEd to the CNI gateway.
+#     Requires a Traefik pod on the node that receives traffic; fine on
+#     single-node k3s.
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  failurePolicy: abort
+  valuesContent: |-
+    ports:
+      websecure:
+        tls:
+          enabled: true
+      imaps:
+        port: 993
+        expose:
+          default: true
+        exposedPort: 993
+        protocol: TCP
+      submissions:
+        port: 465
+        expose:
+          default: true
+        exposedPort: 465
+        protocol: TCP
+    service:
+      externalTrafficPolicy: Local
+    providers:
+      kubernetesCRD:
+        allowCrossNamespace: true
+    additionalArguments:
+      - "--entrypoints.web.http.redirections.entryPoint.to=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--certificatesresolvers.default.acme.email=info@agentsphere.cloud"
+      - "--certificatesresolvers.default.acme.storage=/data/acme.json"
+      - "--certificatesresolvers.default.acme.tlschallenge=true"
+      - "--certificatesresolvers.eho.acme.email=info@eho.pub"
+      - "--certificatesresolvers.eho.acme.storage=/data/acme-eho.json"
+      - "--certificatesresolvers.eho.acme.tlschallenge=true"

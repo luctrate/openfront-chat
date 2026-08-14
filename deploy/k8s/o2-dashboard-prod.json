@@ -1408,6 +1408,232 @@
             "h": 5,
             "i": 12
           }
+        },
+        {
+          "id": "p13",
+          "type": "bar",
+          "title": "Age-gate decisions, by country",
+          "description": "Verdict per (country, verdict). verdict = pass | reject | no_client_flag. Threshold table lives in relay-example/geo.js.",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, sum(value) AS y_axis_1, country AS breakdown_1 FROM \"oftc_age_gate_decisions_total\" WHERE stage = 'prod' GROUP BY x_axis_1, breakdown_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_age_gate_decisions_total",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "hits",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "sum"
+                  }
+                ],
+                "breakdown": [
+                  {
+                    "label": "country",
+                    "alias": "breakdown_1",
+                    "column": "country",
+                    "color": null
+                  }
+                ],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 25,
+            "w": 6,
+            "h": 5,
+            "i": 13
+          }
+        },
+        {
+          "id": "p14",
+          "type": "bar",
+          "title": "Age-gate decisions, by verdict",
+          "description": "Same metric grouped by verdict — quick view of reject vs pass rates.",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "",
+            "unit_custom": null,
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "y_axis_min": null,
+            "y_axis_max": null,
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "position": null,
+              "rotate": 0
+            },
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "value": null,
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS x_axis_1, sum(value) AS y_axis_1, verdict AS breakdown_1 FROM \"oftc_age_gate_decisions_total\" WHERE stage = 'prod' GROUP BY x_axis_1, breakdown_1 ORDER BY x_axis_1",
+              "vrlFunctionQuery": null,
+              "customQuery": true,
+              "fields": {
+                "stream": "oftc_age_gate_decisions_total",
+                "stream_type": "metrics",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "x_axis_1",
+                    "column": "_timestamp",
+                    "color": null,
+                    "aggregationFunction": "histogram"
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "hits",
+                    "alias": "y_axis_1",
+                    "column": "value",
+                    "color": null,
+                    "aggregationFunction": "sum"
+                  }
+                ],
+                "breakdown": [
+                  {
+                    "label": "verdict",
+                    "alias": "breakdown_1",
+                    "column": "verdict",
+                    "color": null
+                  }
+                ],
+                "z": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100
+              }
+            }
+          ],
+          "layout": {
+            "x": 6,
+            "y": 25,
+            "w": 6,
+            "h": 5,
+            "i": 14
+          }
         }
       ]
     }

@@ -254,6 +254,20 @@ const dashboard = {
         queries: [timeseries({ stream: "oftc_room_full_total", alias: "hits", agg: "sum", breakdown: "room_type" })],
         layout: { x: 6, y: 20, w: 6, h: 5 },
       }),
+
+      // Row 6 — age gate
+      panel({
+        id: "p13", i: 13, type: "bar", title: "Age-gate decisions, by country",
+        description: "Verdict per (country, verdict). verdict = pass | reject | no_client_flag. Threshold table lives in relay-example/geo.js.",
+        queries: [timeseries({ stream: "oftc_age_gate_decisions_total", alias: "hits", agg: "sum", breakdown: "country" })],
+        layout: { x: 0, y: 25, w: 6, h: 5 },
+      }),
+      panel({
+        id: "p14", i: 14, type: "bar", title: "Age-gate decisions, by verdict",
+        description: "Same metric grouped by verdict — quick view of reject vs pass rates.",
+        queries: [timeseries({ stream: "oftc_age_gate_decisions_total", alias: "hits", agg: "sum", breakdown: "verdict" })],
+        layout: { x: 6, y: 25, w: 6, h: 5 },
+      }),
     ],
   }],
   variables: { list: [], showDynamicFilters: false },

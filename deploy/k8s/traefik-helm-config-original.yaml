@@ -1,0 +1,36 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  failurePolicy: reinstall
+  valuesContent: |-
+    ports:
+      websecure:
+        tls:
+          enabled: true
+      imaps:
+        port: 993
+        expose:
+          default: true
+        exposedPort: 993
+        protocol: TCP
+      submissions:
+        port: 465
+        expose:
+          default: true
+        exposedPort: 465
+        protocol: TCP
+    providers:
+      kubernetesCRD:
+        allowCrossNamespace: true
+    additionalArguments:
+      - "--entrypoints.web.http.redirections.entryPoint.to=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--certificatesresolvers.default.acme.email=info@agentsphere.cloud"
+      - "--certificatesresolvers.default.acme.storage=/data/acme.json"
+      - "--certificatesresolvers.default.acme.tlschallenge=true"
+      - "--certificatesresolvers.eho.acme.email=info@eho.pub"
+      - "--certificatesresolvers.eho.acme.storage=/data/acme-eho.json"
+      - "--certificatesresolvers.eho.acme.tlschallenge=true"

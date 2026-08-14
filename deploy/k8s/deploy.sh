@@ -16,6 +16,7 @@ REPO="$HERE/../.."
 RELAY_DIR="$REPO/relay-example"
 RELAY_SRC="$RELAY_DIR/server.js"
 METRICS_SRC="$RELAY_DIR/metrics.js"
+GEO_SRC="$RELAY_DIR/geo.js"
 PACKAGE_SRC="$RELAY_DIR/package.json"
 IMAGE_VERSION=$(python3 -c "import json,sys;print(json.load(open(sys.argv[1]))['version'])" "$RELAY_DIR/package.json")
 IMAGE_TAG="openfront-relay:$IMAGE_VERSION"
@@ -32,7 +33,7 @@ set -a; . "$REPO/.env"; set +a
 : "${GCP_INSTANCE:?GCP_INSTANCE not set in .env}"
 : "${GCP_ZONE:?GCP_ZONE not set in .env}"
 
-for f in "$RELAY_SRC" "$METRICS_SRC" "$PACKAGE_SRC"; do
+for f in "$RELAY_SRC" "$METRICS_SRC" "$GEO_SRC" "$PACKAGE_SRC"; do
   if [ ! -f "$f" ]; then echo "missing $f" >&2; exit 1; fi
 done
 
@@ -47,7 +48,7 @@ echo "==> copying build context to VM"
 $SSH --command="rm -rf $REMOTE_DIR && mkdir -p $REMOTE_DIR"
 
 $SCP --recurse "$HERE"/* "$GCP_INSTANCE:$REMOTE_DIR/"
-$SCP "$RELAY_SRC" "$METRICS_SRC" "$PACKAGE_SRC" "$GCP_INSTANCE:$REMOTE_DIR/"
+$SCP "$RELAY_SRC" "$METRICS_SRC" "$GEO_SRC" "$PACKAGE_SRC" "$GCP_INSTANCE:$REMOTE_DIR/"
 
 echo "==> building image with nerdctl into k3s containerd namespace"
 $SSH --command="sudo nerdctl --address /run/k3s/containerd/containerd.sock -n k8s.io build -t $IMAGE_TAG $REMOTE_DIR"
